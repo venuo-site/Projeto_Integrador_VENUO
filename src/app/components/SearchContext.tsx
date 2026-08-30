@@ -1,0 +1,34 @@
+import { createContext, useContext, useState, ReactNode } from 'react';
+
+interface SearchContextType {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  scrollToSearch: () => void;
+}
+
+const SearchContext = createContext<SearchContextType | undefined>(undefined);
+
+export function SearchProvider({ children }: { children: ReactNode }) {
+  const [searchValue, setSearchValue] = useState('');
+
+  const scrollToSearch = () => {
+    const searchElement = document.getElementById('search-bar');
+    if (searchElement) {
+      searchElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  return (
+    <SearchContext.Provider value={{ searchValue, setSearchValue, scrollToSearch }}>
+      {children}
+    </SearchContext.Provider>
+  );
+}
+
+export function useSearch() {
+  const context = useContext(SearchContext);
+  if (context === undefined) {
+    throw new Error('useSearch must be used within a SearchProvider');
+  }
+  return context;
+}
