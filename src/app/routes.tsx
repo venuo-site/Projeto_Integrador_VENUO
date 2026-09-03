@@ -11,7 +11,7 @@ import { AboutProjectPage } from "./pages/AboutProjectPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     Component: RootLayout,
